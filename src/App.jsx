@@ -1,19 +1,19 @@
-import { useEffect } from 'react';
-import axios from './utils/axios.customize';
+import { Routes, Route, Link } from 'react-router-dom';
+
+import HomePage from './pages/Home';
+import UserPage from './pages/User';
+import RegisterPage from './pages/Register';
+import LoginPage from './pages/Login';
 
 function App() {
-   useEffect(() => {
-      const fetchAPI = async () => {
-         const res = await axios.get('/v1/api');
-         console.log('check', res);
-      };
-
-      fetchAPI();
-   }, []);
-
    return (
       <div className="wrapper">
-         <h1>Hello World from React</h1>
+         <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/user" element={<UserPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
+         </Routes>
       </div>
    );
 }
