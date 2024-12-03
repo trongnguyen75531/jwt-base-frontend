@@ -13,7 +13,7 @@ const Register = () => {
       try {
          const response = await createUser(email, password);
          setTimeout(() => {
-            if (response) {
+            if (response.data) {
                notification.success({
                   message: 'Create User',
                   description: 'Đăng ký tài khoản thành công!'

@@ -1,10 +1,34 @@
 import React from 'react';
-import { Button, Form, Input } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { Button, Form, Input, notification } from 'antd';
 
+import { handleLogin } from '../utils/apis';
 
 const Login = () => {
-   const onFinish = (loginInfo) => {
-      console.log(loginInfo);
+   const navigate = useNavigate();
+
+   const onFinish = async (loginInfo) => {
+      const { email, password } = loginInfo;
+      try {
+         const response = await handleLogin(email, password);
+         setTimeout(() => {
+            if (response.data && response.data.code === 0) {
+               localStorage.setItem('token', response.data.token);
+               notification.success({
+                  message: 'Login User',
+                  description: 'Đăng nhập tài khoản thành công!'
+               });
+               navigate('/');
+            } else {
+               notification.error({
+                  message: 'Login User',
+                  description: 'Đăng nhập tài khoản thất bại!'
+               });
+            }
+         }, 500);
+      } catch (error) {
+         console.log('Có lỗi', error);
+      }
    };
 
    return (
