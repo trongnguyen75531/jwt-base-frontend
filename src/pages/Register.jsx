@@ -10,8 +10,11 @@ const Register = () => {
 
    const onFinish = async (formData) => {
       const { email, password } = formData;
+
       try {
          const response = await createUser(email, password);
+         console.log(response);
+
          setTimeout(() => {
             if (response.data) {
                notification.success({
@@ -27,7 +30,14 @@ const Register = () => {
             }
          }, 500);
       } catch (error) {
-         console.log('Có lỗi', error);
+         if (error.response.data.statusCode === 400) {
+            notification.error({
+               message: 'Create User',
+               description: 'Email đã tồn tại. Vui lòng nhập email khác.'
+            });
+         }
+
+         console.log('Có lỗi xảy ra', error);
       }
    };
 
