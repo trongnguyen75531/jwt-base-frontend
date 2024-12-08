@@ -12,8 +12,14 @@ const handleLogin = async (email, password) => {
    return await axios.post(API_URL, data);
 };
 
+const getUsers = async () => {
+   const API_URL = 'v1/api/users';
+   return await axios.get(API_URL);
+};
+
 
 export {
    createUser,
-   handleLogin
+   handleLogin,
+   getUsers
 };

@@ -13,7 +13,6 @@ const Register = () => {
 
       try {
          const response = await createUser(email, password);
-         console.log(response);
 
          setTimeout(() => {
             if (response.data) {
@@ -30,6 +29,7 @@ const Register = () => {
             }
          }, 500);
       } catch (error) {
+
          if (error.response.data.statusCode === 400) {
             notification.error({
                message: 'Create User',
