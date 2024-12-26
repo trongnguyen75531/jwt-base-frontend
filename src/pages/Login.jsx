@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, notification } from 'antd';
 
 import { handleLogin } from '../utils/apis';
+import { AuthContext } from '../components/AuthContext';
 
 const Login = () => {
    const navigate = useNavigate();
+   const { auth, setAuth } = useContext(AuthContext);
+   console.log(auth);
 
    const onFinish = async (loginInfo) => {
       const { email, password } = loginInfo;
@@ -18,6 +21,15 @@ const Login = () => {
                   message: 'Login User',
                   description: 'Đăng nhập tài khoản thành công!'
                });
+
+               setAuth({
+                  isAuthenticated: true,
+                  user: {
+                     email: response.data.user.email || "",
+                     username: response.data.user.email || ""
+                  }
+               })
+
                navigate('/');
             } else {
                notification.error({

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Table } from 'antd';
+import { notification, Table } from 'antd';
 import Header from '../components/Header';
 import { getUsers } from '../utils/apis';
 
@@ -9,7 +9,14 @@ function Users() {
    useEffect(() => {
       (async () => {
          const response = await getUsers();
-         response.data && setDataSource(response.data);
+         if (!response.message) {
+            response.data && setDataSource(response.data);
+         } else {
+            notification.error({
+               message: "Không thể xác thực",
+               description: response.message
+            });
+         }
       })();
    }, []);
 
